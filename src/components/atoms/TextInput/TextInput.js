@@ -7,6 +7,7 @@ const TextInput = ({
   fontSize,
   backgroundColor,
   width,
+  height,
   padding,
   margin,
   border,
@@ -29,6 +30,7 @@ const TextInput = ({
     margin,
     border,
     width,
+    height,
     textColor,
     backgroundColor,
   });
