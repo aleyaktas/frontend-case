@@ -5,7 +5,7 @@ const style = () => ({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    padding: "4rem",
+    padding: "2rem",
   },
   header: {
     display: "flex",

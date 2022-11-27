@@ -28,7 +28,7 @@ const WarriorCard = ({
         {isOpen && (
           <Button
             width="10rem"
-            height="5.2rem"
+            height="4.2rem"
             text="Savaşçıyı Sil"
             buttonColor="red"
             onClick={onRemoveWarrior}

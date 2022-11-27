@@ -87,7 +87,7 @@ const SkillCard = ({ skill, onRemoveSkill, onSaveSkill }) => {
         <Button
           text="Kaydet"
           width="10rem"
-          height="5.2rem"
+          height="4.2rem"
           margin="0 1rem 0 0"
           buttonColor="green"
           disabled={skill?.id}
@@ -97,7 +97,7 @@ const SkillCard = ({ skill, onRemoveSkill, onSaveSkill }) => {
         <Button
           text="Sil"
           width="10rem"
-          height="5.2rem"
+          height="4.2rem"
           buttonColor="red"
           disabled={!skill?.id}
           textColor="black"
