@@ -1,6 +1,7 @@
 import "./App.css";
 import WarriorCard from "./components/molecules/WarriorCard/WarriorCard";
 import WarriorCardList from "./components/organisms/WarriorCardList/WarriorCardList";
+import Navbar from "./layouts/Navbar/Navbar";
 
 const App = () => {
   const warriors = [
@@ -45,6 +46,7 @@ const App = () => {
   ];
   return (
     <div className="App">
+      <Navbar />
       {/* <WarriorCard
         name="Savaşçı 1"
         healthyPoints={70}

@@ -28,6 +28,8 @@ const Button = ({
   onChange,
   className,
   textMargin,
+  textDecorationLine,
+  textUnderlineOffset,
   disabled,
   type,
 }) => {
@@ -43,6 +45,7 @@ const Button = ({
     iconSize,
     buttonColor,
     textPosition,
+    textDecorationLine,
     disabled,
   });
 
@@ -63,6 +66,8 @@ const Button = ({
         fontSize={fontSize}
         color={textColor}
         letterSpacing={letterSpacing}
+        textDecorationLine={textDecorationLine}
+        textUnderlineOffset={textUnderlineOffset}
       />
       {iconName && (
         <Icon
