@@ -9,6 +9,7 @@ const TextInput = ({
   width,
   height,
   padding,
+  disabled,
   margin,
   border,
   textColor,
@@ -23,6 +24,8 @@ const TextInput = ({
   onChange,
   onKeyDown,
   value,
+  min,
+  max,
 }) => {
   const styles = style({
     fontSize,
@@ -49,6 +52,9 @@ const TextInput = ({
         value={value}
         name={placeHolder.toLowerCase()}
         type={type}
+        disabled={disabled}
+        min={min}
+        max={max}
         className={`${font} ${className}`}
         style={styles.input}
         placeholder={placeHolder}

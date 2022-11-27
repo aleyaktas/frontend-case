@@ -2,7 +2,12 @@ import React from "react";
 import WarriorCard from "../../molecules/WarriorCard/WarriorCard";
 import style from "./WarriorCardList.style";
 
-const WarriorCardList = ({ warriors }) => {
+const WarriorCardList = ({
+  warriors,
+  onSaveSkill,
+  onRemoveSkill,
+  onRemoveWarrior,
+}) => {
   const styles = style();
   return (
     <div style={styles.container}>
@@ -12,9 +17,9 @@ const WarriorCardList = ({ warriors }) => {
             name={warrior.name}
             healthyPoints={warrior.hp}
             skills={warrior.skills}
-            onRemoveSkill={() => null}
-            onSaveSkill={() => null}
-            onRemoveWarrior={() => null}
+            onRemoveSkill={(skill_id) => onRemoveSkill(skill_id)}
+            onSaveSkill={(skill) => onSaveSkill(warrior.id, skill)}
+            onRemoveWarrior={() => onRemoveWarrior(warrior.id)}
           />
         </div>
       ))}

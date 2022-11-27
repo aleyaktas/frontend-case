@@ -4,7 +4,7 @@ import Button from "../../atoms/Button/Button";
 import TextInput from "../../atoms/TextInput/TextInput";
 import style from "./SkillCard.style";
 
-const SkillCard = ({ skill, onRemoveSkill, onSaveSkill }) => {
+const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
   const [newSkill, setNewSkill] = useState({
     skill_type: skill?.skill_type || 0,
     skill_type_option: skill?.skill_type_option || 0,
@@ -15,60 +15,75 @@ const SkillCard = ({ skill, onRemoveSkill, onSaveSkill }) => {
 
   return (
     <div style={styles.container}>
-      <Form.Select defaultValue={newSkill.skill_type} style={styles.option}>
-        <option>Tür</option>
+      <Form.Select
+        onChange={(e) =>
+          setNewSkill({ ...newSkill, skill_type: parseInt(e.target.value) })
+        }
+        defaultValue={newSkill.skill_type}
+        style={styles.option}
+      >
+        <option disabled={skill}>Tür</option>
         <option
+          name="skill_type"
           value={1}
-          onChange={() =>
-            setNewSkill({
-              ...skill,
-              skill_type: 1,
-            })
+          disabled={
+            skill
+              ? true
+              : skills?.filter((skill) => skill.skill_type === 1).length === 2
           }
         >
           Atak
         </option>
         <option
+          name="skill_type"
           value={2}
-          onChange={() =>
-            setNewSkill({
-              ...skill,
-              skill_type: 2,
-            })
+          disabled={
+            skill
+              ? true
+              : skills?.filter((skill) => skill.skill_type === 2).length === 2
           }
         >
           Defans
         </option>
       </Form.Select>
       <Form.Select
+        onChange={(e) =>
+          setNewSkill({
+            ...newSkill,
+            skill_type_option: parseInt(e.target.value),
+          })
+        }
         defaultValue={newSkill.skill_type_option}
         style={styles.option}
       >
-        <option>Alt Tür</option>
+        <option disabled={skill}>Alt Tür</option>
         <option
+          name="skill_type_option"
           value={1}
-          onChange={() =>
-            setNewSkill({
-              ...skill,
-              skill_type_option: 1,
-            })
+          disabled={
+            skill
+              ? true
+              : skills?.filter((skill) => skill.skill_type_option === 1)
+                  .length === 2
           }
         >
           Yakın Mesafe
         </option>
         <option
+          name="skill_type_option"
           value={2}
-          onChange={() =>
-            setNewSkill({
-              ...skill,
-              skill_type_option: 2,
-            })
+          disabled={
+            skill
+              ? true
+              : skills?.filter((skill) => skill.skill_type_option === 2)
+                  .length === 2
           }
         >
           Uzak Mesafe
         </option>
       </Form.Select>
       <TextInput
+        disabled={skill}
         fontSize="1.6rem"
         height="5.2rem"
         padding="1rem"
@@ -78,8 +93,8 @@ const SkillCard = ({ skill, onRemoveSkill, onSaveSkill }) => {
         placeHolder="4-20"
         onChange={(e) =>
           setNewSkill({
-            ...skill,
-            point: e.target.value,
+            ...newSkill,
+            point: parseInt(e.target.value),
           })
         }
       />
@@ -92,7 +107,14 @@ const SkillCard = ({ skill, onRemoveSkill, onSaveSkill }) => {
           buttonColor="green"
           disabled={skill?.id}
           textColor="black"
-          onClick={() => onSaveSkill(newSkill)}
+          onClick={() => {
+            onSaveSkill(newSkill);
+            setNewSkill({
+              skill_type: 0,
+              skill_type_option: 0,
+              point: null,
+            });
+          }}
         />
         <Button
           text="Sil"

@@ -42,8 +42,8 @@ const WarriorCard = ({
       {isOpen && (
         <SkillCardList
           skills={skills}
-          onRemoveSkill={onRemoveSkill}
-          onSaveSkill={onSaveSkill}
+          onRemoveSkill={(skill_id) => onRemoveSkill(skill_id)}
+          onSaveSkill={(skill) => onSaveSkill(skill)}
         />
       )}
     </div>

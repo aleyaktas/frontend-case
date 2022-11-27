@@ -1,7 +1,11 @@
 import "./App.css";
-import WarriorCard from "./components/molecules/WarriorCard/WarriorCard";
-import WarriorCardList from "./components/organisms/WarriorCardList/WarriorCardList";
 import Navbar from "./layouts/Navbar/Navbar";
+import Settings from "./screens/Settings/Settings";
+import store, { persistor } from "./store";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import axios from "axios";
 
 const App = () => {
   const warriors = [
@@ -44,19 +48,21 @@ const App = () => {
       ],
     },
   ];
+  axios.defaults.baseURL = "https://projectone.proxolab.com";
+
   return (
-    <div className="App">
-      <Navbar />
-      {/* <WarriorCard
-        name="Savaşçı 1"
-        healthyPoints={70}
-        skills={skills}
-        onRemoveSkill={() => null}
-        onSaveSkill={() => null}
-        onRemoveWarrior={() => null}
-      /> */}
-      <WarriorCardList warriors={warriors} />
-    </div>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>
+          {/* <ToastContainer /> */}
+          <Navbar />
+          <Routes>
+            {/* <Route path="/warrior" element={<Warrior />} /> */}
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   );
 };
 export default App;

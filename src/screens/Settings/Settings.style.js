@@ -1,25 +1,19 @@
 const style = () => ({
   container: {
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
     padding: "2rem",
-    marginBottom: "3rem",
-    boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
   },
-  header: {
+  inputContainer: {
+    width: "100%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  progressBar: {
-    width: "20rem",
-    height: "3rem",
-    fontSize: "1.6rem",
+    justifyContent: "center",
+    margin: "1.6rem 0",
   },
 });
 
