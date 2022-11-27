@@ -16,6 +16,7 @@ const Text = ({
   lineHeight,
   padding,
   margin,
+  width,
 }) => {
   const styles = style({
     fontSize,
@@ -28,6 +29,7 @@ const Text = ({
     lineHeight,
     margin,
     padding,
+    width,
   });
 
   return (

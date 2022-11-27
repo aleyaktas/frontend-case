@@ -86,7 +86,7 @@ const SkillCard = ({ skill, onRemoveSkill, onSaveSkill }) => {
       <div style={styles.buttons}>
         <Button
           text="Kaydet"
-          width="12rem"
+          width="10rem"
           height="5.2rem"
           margin="0 1rem 0 0"
           buttonColor="green"
@@ -96,7 +96,7 @@ const SkillCard = ({ skill, onRemoveSkill, onSaveSkill }) => {
         />
         <Button
           text="Sil"
-          width="12rem"
+          width="10rem"
           height="5.2rem"
           buttonColor="red"
           disabled={!skill?.id}
