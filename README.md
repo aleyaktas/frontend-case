@@ -1,7 +1,7 @@
 
 # Frontend Case
 
-This repo is the frontend case assignment given by Proxolab.
+This repo is the frontend case assignment given by Proxolab. Warriors can be added in the project, after which special abilities and life points can be given to these warriors. A warrior is then determined, a random warrior is chosen, and the battle is fought. The game continues with offense and defense. At the end of this, the first to die loses the game.
 
 ## Tech Stack
 
