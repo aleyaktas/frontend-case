@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import axios from "axios";
+import Warrior from "./screens/Warrior/Warrior";
 
 const App = () => {
   const warriors = [
@@ -54,11 +55,11 @@ const App = () => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <BrowserRouter>
-          {/* <ToastContainer /> */}
           <Navbar />
           <Routes>
-            {/* <Route path="/warrior" element={<Warrior />} /> */}
+            <Route path="/" element={<Warrior />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="*" element={<Warrior />} />
           </Routes>
         </BrowserRouter>
       </PersistGate>

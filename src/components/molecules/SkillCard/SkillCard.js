@@ -22,7 +22,9 @@ const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
         defaultValue={newSkill.skill_type}
         style={styles.option}
       >
-        <option disabled={skill}>Tür</option>
+        <option value={0} disabled>
+          Tür
+        </option>
         <option
           name="skill_type"
           value={1}
@@ -56,7 +58,9 @@ const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
         defaultValue={newSkill.skill_type_option}
         style={styles.option}
       >
-        <option disabled={skill}>Alt Tür</option>
+        <option value={0} disabled>
+          Alt Tür
+        </option>
         <option
           name="skill_type_option"
           value={1}
@@ -106,7 +110,7 @@ const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
           margin="0 1rem 0 0"
           buttonColor="green"
           disabled={skill?.id}
-          textColor="black"
+          textColor="white"
           onClick={() => {
             onSaveSkill(newSkill);
             setNewSkill({
@@ -122,7 +126,7 @@ const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
           height="4.2rem"
           buttonColor="red"
           disabled={!skill?.id}
-          textColor="black"
+          textColor="white"
           onClick={() => onRemoveSkill(skill?.id)}
         />
       </div>

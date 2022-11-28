@@ -1,10 +1,10 @@
 const style = () => ({
   container: {
     width: "100%",
+    height: "94vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
     padding: "2rem",
   },
   inputContainer: {

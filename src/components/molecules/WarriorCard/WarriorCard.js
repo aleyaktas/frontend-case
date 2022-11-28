@@ -31,6 +31,7 @@ const WarriorCard = ({
             height="4.2rem"
             text="Savaşçıyı Sil"
             buttonColor="red"
+            textColor="white"
             onClick={onRemoveWarrior}
           />
         )}

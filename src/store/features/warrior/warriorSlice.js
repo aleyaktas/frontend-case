@@ -2,18 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  firstWarrior: {
-    id: "",
-    name: "",
-    hp: "",
-    skills: [],
-  },
-  secondWarrior: {
-    id: "",
-    name: "",
-    hp: "",
-    skills: [],
-  },
   warriors: [],
 };
 
