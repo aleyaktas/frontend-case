@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Text from "../../components/atoms/Text/Text";
 import { useAppSelector } from "../../store";
 import Form from "react-bootstrap/Form";
@@ -24,7 +24,6 @@ const Warrior = () => {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isGameFinished, setIsGameFinished] = useState(false);
   const [isAttack, setIsAttack] = useState(Math.random() > 0.5);
-  console.log("isAttack", isAttack);
   const [
     selectedSecondWarriorSubTypeOption,
     setSelectedSecondWarriorSubTypeOption,
@@ -48,6 +47,7 @@ const Warrior = () => {
               onChange={(e) => {
                 setFirstWarrior(warriors[e.target.value]);
               }}
+              disabled={isGameStarted}
             >
               <option
                 value={0}
@@ -131,10 +131,13 @@ const Warrior = () => {
           )}
         </>
       ) : (
-        <Text
-          text="Herhangi bir savaşçı bulunmamaktadır. Önce ayarlardan savaşçı ekleyiniz."
-          fontSize="2.4rem"
-        />
+        <div className="alert alert-info m-5 p-4" role="alert">
+          <Text
+            text="🦄 Herhangi bir savaşçı bulunmamaktadır. Önce ayarlardan savaşçı ekleyiniz."
+            fontSize="2rem"
+            color="#0c5460"
+          />
+        </div>
       )}
       {isGameStarted && (
         <div style={styles.gameSection}>

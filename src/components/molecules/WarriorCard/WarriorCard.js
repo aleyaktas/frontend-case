@@ -18,7 +18,7 @@ const WarriorCard = ({
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <Text text={name} />
+        <Text text={name} fontSize="1.8rem" />
         <ProgressBar
           label={healthyPoints}
           variant="success"
@@ -30,7 +30,7 @@ const WarriorCard = ({
             width="10rem"
             height="4.2rem"
             text="Savaşçıyı Sil"
-            buttonColor="red"
+            buttonColor="#dc3545"
             textColor="white"
             onClick={onRemoveWarrior}
           />
@@ -38,6 +38,7 @@ const WarriorCard = ({
         <Button
           iconName={isOpen ? "UpArrow" : "DownArrow"}
           onClick={() => setIsOpen(!isOpen)}
+          iconSize="3.5rem"
         />
       </div>
       {isOpen && (

@@ -67,8 +67,11 @@ const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
           disabled={
             skill
               ? true
-              : skills?.filter((skill) => skill.skill_type_option === 1)
-                  .length === 2
+              : skills?.filter(
+                  (skill) =>
+                    (skill.skill_type === 1 && skill.skill_type_option === 1) ||
+                    (skill.skill_type === 2 && skill.skill_type_option === 1)
+                ).length === 2
           }
         >
           Yakın Mesafe
@@ -79,8 +82,11 @@ const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
           disabled={
             skill
               ? true
-              : skills?.filter((skill) => skill.skill_type_option === 2)
-                  .length === 2
+              : skills?.filter(
+                  (skill) =>
+                    (skill.skill_type === 1 && skill.skill_type_option === 2) ||
+                    (skill.skill_type === 2 && skill.skill_type_option === 2)
+                ).length === 2
           }
         >
           Uzak Mesafe
@@ -95,12 +101,12 @@ const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
         value={newSkill.point}
         type="number"
         placeHolder="4-20"
-        onChange={(e) =>
+        onChange={(e) => {
           setNewSkill({
             ...newSkill,
             point: parseInt(e.target.value),
-          })
-        }
+          });
+        }}
       />
       <div style={styles.buttons}>
         <Button
@@ -109,7 +115,14 @@ const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
           height="4.2rem"
           margin="0 1rem 0 0"
           buttonColor="green"
-          disabled={skill?.id || newSkill.point < 4 || newSkill.point > 20}
+          disabled={
+            skill?.id ||
+            newSkill.point < 4 ||
+            newSkill.point > 20 ||
+            !newSkill.skill_type ||
+            !newSkill.skill_type_option ||
+            !newSkill.point
+          }
           textColor="white"
           onClick={() => {
             onSaveSkill(newSkill);

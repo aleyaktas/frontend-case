@@ -12,8 +12,11 @@ const Navbar = () => {
       <div style={styles.buttons}>
         <Button
           buttonColor="transparent"
+          textColor="white"
           textDecorationLine={location.pathname === "/" ? "underline" : ""}
           textUnderlineOffset="0.7rem"
+          fontSize="1.8rem"
+          font="RobotoBold"
           width="8rem"
           height="4.2rem"
           text="Savaş"
@@ -22,9 +25,12 @@ const Navbar = () => {
         />
         <Button
           buttonColor="transparent"
+          textColor="white"
           width="8rem"
           height="4.2rem"
           text="Ayarlar"
+          fontSize="1.8rem"
+          font="RobotoBold"
           textDecorationLine={
             location.pathname === "/settings" ? "underline" : ""
           }

@@ -97,7 +97,6 @@ export const warriorSlice = createSlice({
     builder.addCase(getWarriors.fulfilled, (state, action) => {
       state.loading = false;
       state.warriors = action.payload.data;
-      console.log(action.payload);
     });
     builder.addCase(addWarrior.pending, (state, action) => {
       state.loading = true;

@@ -21,7 +21,10 @@ const Settings = () => {
   const styles = style();
   const [openModal, setOpenModal] = useState(false);
   const [warrior, setWarrior] = useState({ name: "", hp: 0 });
-  const handleModal = () => setOpenModal(!openModal);
+  const handleModal = () => {
+    setOpenModal(!openModal);
+    setWarrior({ name: "", hp: 0 });
+  };
   const dispatch = useAppDispatch();
   const warriors = useAppSelector((state) => state.warrior.warriors);
 
@@ -78,6 +81,15 @@ const Settings = () => {
             text="Kaydet"
             width="12rem"
             height="4.2rem"
+            disabled={
+              !(
+                warrior.name.length > 0 &&
+                warrior.hp >= 80 &&
+                warrior.hp <= 100 &&
+                warrior.hp &&
+                warrior.name
+              )
+            }
             buttonColor="green"
             textColor="white"
             onClick={async () => {

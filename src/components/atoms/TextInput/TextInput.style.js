@@ -12,7 +12,6 @@ const style = ({
     display: "flex",
     alignItems: "center",
     margin,
-    // width: "-webkit-fill-available",
   },
   input: {
     fontSize,

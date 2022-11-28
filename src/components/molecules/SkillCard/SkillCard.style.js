@@ -6,9 +6,9 @@ const style = () => ({
     justifyContent: "space-between",
     width: "100%",
     padding: "1rem",
-    backgroundColor: "#fff",
     borderRadius: "0.5rem",
     boxShadow: "0 0 0.5rem 0 rgba(0, 0, 0, 0.1)",
+    backgroundColor: "transparent",
   },
   option: {
     marginInlineEnd: "1rem",
