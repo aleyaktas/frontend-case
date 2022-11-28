@@ -93,10 +93,8 @@ const Warrior = () => {
                 const newWarriors = warriors.filter(
                   (warrior) =>
                     warrior.id !== firstWarrior.id &&
-                    warrior.skills.map(
-                      (skill) =>
-                        skill.skill_type === 1 && skill.skill_type === 2
-                    ).length > 0
+                    warrior.skills.some((skill) => skill.skill_type === 2) &&
+                    warrior.skills.some((skill) => skill.skill_type === 1)
                 );
                 const secondWarrior =
                   newWarriors[Math.floor(Math.random() * newWarriors.length)];
