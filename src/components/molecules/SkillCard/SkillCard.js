@@ -109,7 +109,7 @@ const SkillCard = ({ skills, skill, onRemoveSkill, onSaveSkill }) => {
           height="4.2rem"
           margin="0 1rem 0 0"
           buttonColor="green"
-          disabled={skill?.id}
+          disabled={skill?.id || newSkill.point < 4 || newSkill.point > 20}
           textColor="white"
           onClick={() => {
             onSaveSkill(newSkill);

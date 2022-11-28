@@ -39,76 +39,97 @@ const Warrior = () => {
   return (
     <div style={styles.container}>
       {warriors.length > 0 ? (
-        <div style={styles.optionContainer}>
-          <Text text="Savaşçı Seç" width="10rem" />
-          <Form.Select
-            style={styles.options}
-            defaultValue={0}
-            onChange={(e) => {
-              setFirstWarrior(warriors[e.target.value]);
-            }}
-          >
-            <option
-              value={0}
-              disabled
-              selected={controlForSelect === 0 && firstWarrior.id === 0}
+        <>
+          <div style={styles.optionContainer}>
+            <Text text="Savaşçı Seç" width="10rem" />
+            <Form.Select
+              style={styles.options}
+              defaultValue={0}
+              onChange={(e) => {
+                setFirstWarrior(warriors[e.target.value]);
+              }}
             >
-              Seçiniz
-            </option>
-            {warriors.map((warrior, index) => (
               <option
-                key={warrior.id}
-                value={index}
-                disabled={
-                  warrior.skills.map(
-                    (skill) => skill.skill_type === 1 && skill.skill_type === 2
-                  ).length === 0
-                }
+                value={0}
+                disabled
+                selected={controlForSelect === 0 && firstWarrior.id === 0}
               >
-                {warrior.name}
+                Seçiniz
               </option>
-            ))}
-          </Form.Select>
-          <Button
-            text="Başla"
-            fontSize="1.6rem"
-            buttonColor="green"
-            textColor="white"
-            height="4.2rem"
-            margin="0 0 0 2rem"
-            padding="0 3rem"
-            disabled={isGameStarted || firstWarrior.id === 0}
-            onClick={() => {
-              const newWarriors = warriors.filter(
-                (warrior) =>
-                  warrior.id !== firstWarrior.id &&
-                  warrior.skills.map(
-                    (skill) => skill.skill_type === 1 && skill.skill_type === 2
-                  ).length > 0
-              );
-              const secondWarrior =
-                newWarriors[Math.floor(Math.random() * newWarriors.length)];
-              setSecondWarrior(secondWarrior);
-
-              const secondWarriorSkill = secondWarrior?.skills?.filter(
-                (skill) => {
-                  if (isAttack) {
-                    return skill.skill_type === 2;
+              {warriors.map((warrior, index) => (
+                <option
+                  key={warrior.id}
+                  value={index}
+                  disabled={
+                    !(
+                      warrior.skills.some((skill) => skill.skill_type === 2) &&
+                      warrior.skills.some((skill) => skill.skill_type === 1)
+                    )
                   }
-                  return skill.skill_type === 1;
-                }
-              );
+                >
+                  {warrior.name}
+                </option>
+              ))}
+            </Form.Select>
+            <Button
+              text="Başla"
+              fontSize="1.6rem"
+              buttonColor="green"
+              textColor="white"
+              height="4.2rem"
+              margin="0 0 0 2rem"
+              padding="0 3rem"
+              disabled={
+                isGameStarted ||
+                firstWarrior.id === 0 ||
+                warriors.filter((warrior) => {
+                  return (
+                    warrior.skills.some((skill) => skill.skill_type === 2) &&
+                    warrior.skills.some((skill) => skill.skill_type === 1)
+                  );
+                }).length < 2
+              }
+              onClick={() => {
+                const newWarriors = warriors.filter(
+                  (warrior) =>
+                    warrior.id !== firstWarrior.id &&
+                    warrior.skills.map(
+                      (skill) =>
+                        skill.skill_type === 1 && skill.skill_type === 2
+                    ).length > 0
+                );
+                const secondWarrior =
+                  newWarriors[Math.floor(Math.random() * newWarriors.length)];
+                setSecondWarrior(secondWarrior);
 
-              setSelectedSecondWarriorSubTypeOption(
-                secondWarriorSkill[
-                  Math.floor(Math.random() * secondWarriorSkill.length)
-                ]
-              );
+                const secondWarriorSkill = secondWarrior?.skills?.filter(
+                  (skill) => {
+                    if (isAttack) {
+                      return skill.skill_type === 2;
+                    }
+                    return skill.skill_type === 1;
+                  }
+                );
 
-              setIsGameStarted(true);
-            }}
-          />
-        </div>
+                setSelectedSecondWarriorSubTypeOption(
+                  secondWarriorSkill[
+                    Math.floor(Math.random() * secondWarriorSkill.length)
+                  ]
+                );
+
+                setIsGameStarted(true);
+              }}
+            />
+          </div>
+          {!isGameStarted && (
+            <div className="alert alert-info m-5 p-4" role="alert">
+              <Text
+                text="🦄 Oyuna başlamak için en az 2 savaşçının atağı ve defansı olmalıdır."
+                color="#0c5460"
+              />
+            </div>
+          )}
+        </>
       ) : (
         <Text
           text="Herhangi bir savaşçı bulunmamaktadır. Önce ayarlardan savaşçı ekleyiniz."
@@ -123,7 +144,6 @@ const Warrior = () => {
               warrior={firstWarrior}
               isOwner
               setOption={(option) => {
-                console.log("option", option);
                 setSelectedFirstWarriorSubTypeOption(option);
               }}
             />
@@ -132,7 +152,10 @@ const Warrior = () => {
           </div>
           <Button
             disabled={
-              isGameFinished || firstWarrior.hp <= 0 || secondWarrior.hp <= 0
+              isGameFinished ||
+              firstWarrior.hp <= 0 ||
+              secondWarrior.hp <= 0 ||
+              !selectedFirstWarriorSubTypeOption.skill_type_option
             }
             text={isAttack ? "Vur" : "Kaçın"}
             fontSize="1.6rem"
@@ -142,40 +165,67 @@ const Warrior = () => {
             height="4.2rem"
             textColor="white"
             onClick={() => {
-              if (isAttack) {
-                if (
-                  selectedFirstWarriorSubTypeOption.skill_type_option ===
-                  selectedSecondWarriorSubTypeOption.skill_type_option
-                ) {
+              if (selectedFirstWarriorSubTypeOption.skill_type_option) {
+                if (isAttack) {
                   if (
-                    selectedFirstWarriorSubTypeOption.point >=
-                    selectedSecondWarriorSubTypeOption.point
+                    selectedFirstWarriorSubTypeOption.skill_type_option ===
+                    selectedSecondWarriorSubTypeOption.skill_type_option
                   ) {
+                    if (
+                      selectedFirstWarriorSubTypeOption.point >=
+                      selectedSecondWarriorSubTypeOption.point
+                    ) {
+                      setSecondWarrior({
+                        ...secondWarrior,
+                        hp:
+                          secondWarrior.hp -
+                            selectedFirstWarriorSubTypeOption.point +
+                            selectedSecondWarriorSubTypeOption.point <=
+                          0
+                            ? 0
+                            : secondWarrior.hp -
+                              selectedFirstWarriorSubTypeOption.point +
+                              selectedSecondWarriorSubTypeOption.point,
+                      });
+                      setIsAttack(false);
+
+                      const secondWarriorSkill = secondWarrior?.skills?.filter(
+                        (skill) => {
+                          return skill.skill_type === 1;
+                        }
+                      );
+                      setSelectedSecondWarriorSubTypeOption(
+                        secondWarriorSkill[
+                          Math.floor(Math.random() * secondWarriorSkill.length)
+                        ]
+                      );
+                    } else {
+                      const secondWarriorSkill = secondWarrior?.skills?.filter(
+                        (skill) => {
+                          return skill.skill_type === 1;
+                        }
+                      );
+
+                      setSelectedSecondWarriorSubTypeOption(
+                        secondWarriorSkill[
+                          Math.floor(Math.random() * secondWarriorSkill.length)
+                        ]
+                      );
+
+                      setIsAttack(false);
+                    }
+                  } else {
                     setSecondWarrior({
                       ...secondWarrior,
                       hp:
                         secondWarrior.hp -
-                          selectedFirstWarriorSubTypeOption.point +
-                          selectedSecondWarriorSubTypeOption.point <=
+                          selectedFirstWarriorSubTypeOption.point <=
                         0
                           ? 0
                           : secondWarrior.hp -
-                            selectedFirstWarriorSubTypeOption.point +
-                            selectedSecondWarriorSubTypeOption.point,
+                            selectedFirstWarriorSubTypeOption.point,
                     });
                     setIsAttack(false);
-
-                    const secondWarriorSkill = secondWarrior?.skills?.filter(
-                      (skill) => {
-                        return skill.skill_type === 1;
-                      }
-                    );
-                    setSelectedSecondWarriorSubTypeOption(
-                      secondWarriorSkill[
-                        Math.floor(Math.random() * secondWarriorSkill.length)
-                      ]
-                    );
-                  } else {
                     const secondWarriorSkill = secondWarrior?.skills?.filter(
                       (skill) => {
                         return skill.skill_type === 1;
@@ -187,68 +237,66 @@ const Warrior = () => {
                         Math.floor(Math.random() * secondWarriorSkill.length)
                       ]
                     );
-
-                    setIsAttack(false);
                   }
                 } else {
-                  setSecondWarrior({
-                    ...secondWarrior,
-                    hp:
-                      secondWarrior.hp -
-                        selectedFirstWarriorSubTypeOption.point <=
-                      0
-                        ? 0
-                        : secondWarrior.hp -
-                          selectedFirstWarriorSubTypeOption.point,
-                  });
-                  setIsAttack(false);
-                  const secondWarriorSkill = secondWarrior?.skills?.filter(
-                    (skill) => {
-                      return skill.skill_type === 1;
-                    }
-                  );
-
-                  setSelectedSecondWarriorSubTypeOption(
-                    secondWarriorSkill[
-                      Math.floor(Math.random() * secondWarriorSkill.length)
-                    ]
-                  );
-                }
-              } else {
-                if (
-                  selectedFirstWarriorSubTypeOption.skill_type_option ===
-                  selectedSecondWarriorSubTypeOption.skill_type_option
-                ) {
                   if (
-                    selectedFirstWarriorSubTypeOption.point <=
-                    selectedSecondWarriorSubTypeOption.point
+                    selectedFirstWarriorSubTypeOption.skill_type_option ===
+                    selectedSecondWarriorSubTypeOption.skill_type_option
                   ) {
+                    if (
+                      selectedFirstWarriorSubTypeOption.point <=
+                      selectedSecondWarriorSubTypeOption.point
+                    ) {
+                      setFirstWarrior({
+                        ...firstWarrior,
+                        hp:
+                          firstWarrior.hp -
+                            selectedSecondWarriorSubTypeOption.point +
+                            selectedFirstWarriorSubTypeOption.point <=
+                          0
+                            ? 0
+                            : firstWarrior.hp -
+                              selectedSecondWarriorSubTypeOption.point +
+                              selectedFirstWarriorSubTypeOption.point,
+                      });
+                      setIsAttack(true);
+
+                      const secondWarriorSkill = secondWarrior?.skills?.filter(
+                        (skill) => {
+                          return skill.skill_type === 2;
+                        }
+                      );
+
+                      setSelectedSecondWarriorSubTypeOption(
+                        secondWarriorSkill[
+                          Math.floor(Math.random() * secondWarriorSkill.length)
+                        ]
+                      );
+                    } else {
+                      setIsAttack(true);
+                      const secondWarriorSkill = secondWarrior?.skills?.filter(
+                        (skill) => {
+                          return skill.skill_type === 2;
+                        }
+                      );
+
+                      setSelectedSecondWarriorSubTypeOption(
+                        secondWarriorSkill[
+                          Math.floor(Math.random() * secondWarriorSkill.length)
+                        ]
+                      );
+                    }
+                  } else {
                     setFirstWarrior({
                       ...firstWarrior,
                       hp:
                         firstWarrior.hp -
-                          selectedSecondWarriorSubTypeOption.point +
-                          selectedFirstWarriorSubTypeOption.point <=
+                          selectedSecondWarriorSubTypeOption.point <=
                         0
                           ? 0
                           : firstWarrior.hp -
-                            selectedSecondWarriorSubTypeOption.point +
-                            selectedFirstWarriorSubTypeOption.point,
+                            selectedSecondWarriorSubTypeOption.point,
                     });
-                    setIsAttack(true);
-
-                    const secondWarriorSkill = secondWarrior?.skills?.filter(
-                      (skill) => {
-                        return skill.skill_type === 2;
-                      }
-                    );
-
-                    setSelectedSecondWarriorSubTypeOption(
-                      secondWarriorSkill[
-                        Math.floor(Math.random() * secondWarriorSkill.length)
-                      ]
-                    );
-                  } else {
                     setIsAttack(true);
                     const secondWarriorSkill = secondWarrior?.skills?.filter(
                       (skill) => {
@@ -262,30 +310,8 @@ const Warrior = () => {
                       ]
                     );
                   }
-                } else {
-                  setFirstWarrior({
-                    ...firstWarrior,
-                    hp:
-                      firstWarrior.hp -
-                        selectedSecondWarriorSubTypeOption.point <=
-                      0
-                        ? 0
-                        : firstWarrior.hp -
-                          selectedSecondWarriorSubTypeOption.point,
-                  });
-                  setIsAttack(true);
-                  const secondWarriorSkill = secondWarrior?.skills?.filter(
-                    (skill) => {
-                      return skill.skill_type === 2;
-                    }
-                  );
-
-                  setSelectedSecondWarriorSubTypeOption(
-                    secondWarriorSkill[
-                      Math.floor(Math.random() * secondWarriorSkill.length)
-                    ]
-                  );
                 }
+                setSelectedFirstWarriorSubTypeOption({});
               }
             }}
           />

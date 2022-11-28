@@ -9,46 +9,6 @@ import axios from "axios";
 import Warrior from "./screens/Warrior/Warrior";
 
 const App = () => {
-  const warriors = [
-    {
-      id: 1,
-      name: "Savaşçı 1",
-      hp: 100,
-      skills: [
-        {
-          id: 1,
-          skill_type: 1,
-          skill_type_option: 1,
-          point: 10,
-        },
-        {
-          id: 2,
-          skill_type: 2,
-          skill_type_option: 2,
-          point: 20,
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Savaşçı 2",
-      hp: 100,
-      skills: [
-        {
-          id: 1,
-          skill_type: 1,
-          skill_type_option: 1,
-          point: 10,
-        },
-        {
-          id: 2,
-          skill_type: 2,
-          skill_type_option: 2,
-          point: 20,
-        },
-      ],
-    },
-  ];
   axios.defaults.baseURL = "https://projectone.proxolab.com";
 
   return (
